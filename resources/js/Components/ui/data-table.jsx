@@ -25,6 +25,7 @@ import { Input } from "./input"
 
 
 export function DataTable({
+
   columns,
   data,
   searchKey
@@ -49,7 +50,8 @@ export function DataTable({
 
   return (
     <>
-    <div className="flex items-center py-4">
+    <div className="flex items-center pb-4">
+        {searchKey &&
         <Input
           placeholder={`Filter ${searchKey}...`}
           value={(table.getColumn(`${searchKey}`)?.getFilterValue()) ?? ""}
@@ -57,7 +59,7 @@ export function DataTable({
             table.getColumn(`${searchKey}`)?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
-        />
+        />}
       </div>
     <div className="rounded-md border">
       <Table>
@@ -83,6 +85,7 @@ export function DataTable({
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
+              
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
@@ -103,7 +106,7 @@ export function DataTable({
         </TableBody>
       </Table>
     </div>
-    <div className="flex items-center justify-end space-x-2 py-4">
+    {searchKey && <div className="flex items-center justify-end space-x-2 py-4">
         <Button
           variant="outline"
           size="sm"
@@ -120,7 +123,7 @@ export function DataTable({
         >
           Next
         </Button>
-      </div>
+      </div>}
     </>
   
   )

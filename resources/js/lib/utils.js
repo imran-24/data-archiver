@@ -38,3 +38,16 @@ export const floorList = (rental_info) => {rental_info.floor_position.sort((a, b
 
   })
 }
+
+export const expiredWithIn = [
+  { value: '1', label: 'One year' },
+  { value: '2', label: 'Two years' },
+  { value: '3', label: 'Three years' },
+  { value: '4', label: 'Four years' },
+  { value: '5', label: 'Five years' },
+  { value: '6', label: 'Six years' },
+  { value: '7', label: 'Seven years' },
+  { value: '8', label: 'Eight years' },
+  { value: '9', label: 'Nine years' },
+  { value: '10', label: 'Ten years' },
+];

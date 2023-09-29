@@ -29,6 +29,7 @@ import { MultiSelect } from '@/Components/ui/multi-select'
 import SelectMap from '@/Components/map/map'
 import { router } from '@inertiajs/react'
 import AlertModal from '@/Components/modals/alert-modal'
+import { ScrollArea } from '@/Components/ui/scroll-area'
 
 
 
@@ -36,21 +37,45 @@ import AlertModal from '@/Components/modals/alert-modal'
 
 // form schema
 const formSchema = z.object({
-  office_name: z.string().min(2),
-  previous_name: z.string().min(2),
-  type_of_rent: z.string().min(1),
+  office_name: z.string().min(2, {
+    message: "Please enter office name"
+  }),
+  previous_name: z.string(),
+  type_of_rent: z.string().min(1,  {
+    message: "Please select rent type"
+  }),
   head_office_approval: z.boolean().default(false).optional(),
-  building_type: z.string().min(2),
-  year_of_construction: z.date(),
-  floor_space: z.coerce.number().min(1),
-  rent_per_sqft: z.coerce.number().min(1),
-  tensure_of_lease_aggrement: z.coerce.number().min(1),
+  building_type: z.string().min(2,  {
+    message: "Please select building type"
+  }),
+  year_of_construction: z.date({
+    required_error: "year of construction is required.",
+  }),
+  floor_space: z.coerce.number().min(1,  {
+    message: "Please enter floor space"
+  }),
+  rent_per_sqft: z.coerce.number().min(1,  {
+    message: "Please enter rent per sqft"
+  }),
+  tensure_of_lease_aggrement: z.coerce.number().min(1,  {
+    message: "Please enter tensure of lease aggregation"
+  }),
   starting_date: z.date(),
-  floor_position: z.array(z.string()).min(1),
-  address: z.string().min(2),
-  division: z.string().min(1),
-  district: z.string().min(1),
-  upazila: z.string().min(1),
+  floor_position: z.array(z.string()).min(1,{
+    message: "Please select floor positions"
+  }),
+  address: z.string().min(2,  {
+    message: "Please enter office address"
+  }),
+  division: z.string().min(1,  {
+    message: "Please select division"
+  }),
+  district: z.string().min(1, {
+    message: "Please select district"
+  }),
+  upazila: z.string().min(1, {
+    message: "Please select upazila"
+  }),
   location: z.object({
     lng: z.number().min(-180).max(180), // Realistic range for longitude
     lat: z.number().min(-90).max(90),   // Realistic range for latitude
@@ -76,8 +101,8 @@ const ListingForm = ({
       'year_of_construction': "",
       'floor_space': "",
       'floor_position': [],
-      'rent_per_sqft': '1000',
-      'tensure_of_lease_aggrement': '1',
+      'rent_per_sqft': '',
+      'tensure_of_lease_aggrement': '',
       'starting_date': "",
       'address': "",
       'division': "",
@@ -209,7 +234,7 @@ const ListingForm = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
       
-      <div className='grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 items-center gap-2'>
+      <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center gap-2'>
         
         <FormField
           control={form.control}
@@ -275,6 +300,7 @@ const ListingForm = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
+                  
                     {
                         divisions.map(item => (
                             <SelectItem 
@@ -283,10 +309,10 @@ const ListingForm = ({
                                 {item.label}
                             </SelectItem>
                         ))
-                    }                  
+                    }   
+                             
                 </SelectContent>
-              </Select>
-              
+              </Select>             
               <FormMessage />
             </FormItem>
           )}
@@ -307,6 +333,7 @@ const ListingForm = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
+                  <ScrollArea className={`${filter_districts.length && 'h-[250px]'}`}>
                     {
                         filter_districts.map(item => (
                             <SelectItem 
@@ -315,7 +342,8 @@ const ListingForm = ({
                                 {item.label}
                             </SelectItem>
                         ))
-                    }                  
+                    }  
+                  </ScrollArea>                
                 </SelectContent>
               </Select>
               
@@ -339,6 +367,7 @@ const ListingForm = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
+                  <ScrollArea className={`${filter_upazilas.length && 'h-[250px]'}`}>
                     {
                         filter_upazilas.map(item => (
                             <SelectItem 
@@ -347,7 +376,8 @@ const ListingForm = ({
                                 {item.label}
                             </SelectItem>
                         ))
-                    }                  
+                    }       
+                  </ScrollArea>           
                 </SelectContent>
               </Select>
               
@@ -369,6 +399,7 @@ const ListingForm = ({
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
+              
               {
                 rentType.map(item => (
                   <SelectItem 
@@ -378,6 +409,7 @@ const ListingForm = ({
                   </SelectItem>
                 ))
               }
+
               </SelectContent>
             </Select>
             

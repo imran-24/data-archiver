@@ -89,14 +89,24 @@ const UserMenu = ({ currentUser }) => {
                             Dashboard
                         </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Link href='/rental-infos' >
+                    <DropdownMenuItem onClick={() => window.location.assign('/rental-infos')}>
+                        {/* <Link href='/rental-infos' > */}
                             Rental Info
-                        </Link>
+                        {/* </Link> */}
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                         <Link href='/listings' >
                            Listings
+                        </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Link href='/critical-listings' >
+                           Critical Listings
+                        </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Link href='/expired-listings' >
+                           Rent Expired
                         </Link>
                     </DropdownMenuItem>
 

@@ -3,6 +3,7 @@
 import { router, usePage } from '@inertiajs/react'
 import Heading from './Heading'
 import { Button } from './button'
+import { useSearchParams } from 'react-router-dom';
 
 
 const EmptyState = ({
@@ -10,7 +11,13 @@ const EmptyState = ({
     subtitle='Try changing or removing some of your filters',
     showReset
 }) => {
+  let [searchParams, setSearchParams] = useSearchParams();
 
+  const removeFilter = () => {
+    const params = {}
+    setSearchParams(params)
+    router.visit('/rental-infos')
+  }
   return (
     <div
     className='
@@ -32,7 +39,7 @@ const EmptyState = ({
             showReset && 
             <Button
             variant={"outline"}
-            onClick={()=> router.visit('/rental-infos')}
+            onClick={removeFilter}
             >Remove all</Button>
         }
         </div>

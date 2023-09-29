@@ -30,9 +30,10 @@ use Inertia\Inertia;
 Route::redirect('/', 'login');
 
 Route::resource('/rental-infos', RentalInfoController::class)->middleware(['auth']);
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',[ RentalInfoController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/critical-listings',[ RentalInfoController::class, 'criticalListings'])->middleware(['auth', 'verified'])->name('critical-listings');
+Route::get('/expired-listings',[ RentalInfoController::class, 'expiredListings'])->middleware(['auth', 'verified'])->name('expired-listings');
+
 
 Route::resource('listings', ListingController::class)->middleware(['auth']);
 

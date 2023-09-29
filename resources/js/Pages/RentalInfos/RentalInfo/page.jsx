@@ -2,6 +2,7 @@ import React from 'react'
 import RentalInfoClient from './components/client'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import { ScrollArea } from '@/Components/ui/scroll-area';
 
 const RentalInfoPage = ({rental_info, divisions, districts, upazilas}) => {
   

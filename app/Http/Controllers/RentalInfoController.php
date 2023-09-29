@@ -19,20 +19,39 @@ class RentalInfoController extends Controller
      */
     public function index(Request $request)
     {
-        $searchQuery = $request->input('search');
+        $queryParameters = $request->query();
+        $searchQuery = $queryParameters['search'] ?? null;
 
-        if($searchQuery)
-            {$listings = Listing::orderBy("created_at", "desc")
-                ->when($searchQuery, function ($query) use ($searchQuery) {
-            // Apply search filter if a searchQuery is provided
-                return $query->where('office_name', 'like', '%' . $searchQuery . '%')
+        $listings = Listing::orderBy("created_at", "desc");
+
+        if ($searchQuery) {
+            $listings->where(function ($query) use ($searchQuery) {
+                $query->where('id', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('building_type', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('office_name', 'like', '%' . $searchQuery . '%')
                     ->orWhere('previous_name', 'like', '%' . $searchQuery . '%');
-            })
-            ->get();
-            
-        }else{
-            $listings = Listing::orderBy("created_at", "desc")->get();
+            });
         }
+
+        if (isset($queryParameters['Division'])) {
+            $listings->where('division', $queryParameters['Division']);
+        }
+        if (isset($queryParameters['District'])) {
+            $listings->where('district', $queryParameters['District']);
+        }
+        if (isset($queryParameters['Upazila'])) {
+            $listings->where('upazila', $queryParameters['Upazila']);
+        }
+
+        if (isset($queryParameters['Approval'])) {
+            $listings->where('head_office_approval', $queryParameters['Approval']);
+        }
+
+        if (isset($queryParameters['RentType'])) {
+            $listings->where('type_of_rent', $queryParameters['RentType']);
+        }
+
+        $listings = $listings->get();
 
 
         $divisions = Division::all();
@@ -56,9 +75,64 @@ class RentalInfoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function dashboard()
     {
-        //
+        $listings = Listing::orderBy("created_at", "desc");
+        $listings = $listings->get();
+
+        if(Auth::user()){
+            $user = Auth::user();
+            return Inertia
+            ::render('Dashboard',[
+                'rental_infos' => $listings,
+                'user' => $user,
+            ]);
+        }
+
+    }
+
+    public function criticalListings()
+    {
+        $listings = Listing::orderBy("created_at", "desc");
+        $listings = $listings->get();
+
+        $divisions = Division::all();
+        $districts = District::all();
+        $upazilas = Upazila::all();
+        if(Auth::user()){
+            $user = Auth::user();
+            return Inertia
+            ::render('CriticalListings/page',[
+                'rental_infos' => $listings,
+                'user' => $user,
+                'divisions' => $divisions,
+                'districts' => $districts,
+                'upazilas' => $upazilas,
+            ]);
+        }
+
+    }
+
+    public function expiredListings()
+    {
+        $listings = Listing::orderBy("created_at", "desc");
+        $listings = $listings->get();
+
+        $divisions = Division::all();
+        $districts = District::all();
+        $upazilas = Upazila::all();
+        if(Auth::user()){
+            $user = Auth::user();
+            return Inertia
+            ::render('ExpiredListings/page',[
+                'rental_infos' => $listings,
+                'user' => $user,
+                'divisions' => $divisions,
+                'districts' => $districts,
+                'upazilas' => $upazilas,
+            ]);
+        }
+
     }
 
     /**

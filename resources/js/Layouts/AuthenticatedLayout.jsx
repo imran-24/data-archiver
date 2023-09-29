@@ -11,13 +11,13 @@ import { ScrollArea } from '@/Components/ui/scroll-area';
 export default function Authenticated({ children }) {
 
     return (
-        <div className="h-screen ">
+        <div className="max-h-screen ">
             <ToastProvider />
             <Navbar />
-            <div className='pt-4'>
-            {/* <ScrollArea className="h-[89vh] w-[100vw]"> */}
+            <div className='pt-1'>
+            <ScrollArea className="h-[90.5vh] w-[100vw]">
                 <main>{children}</main>
-            {/* </ScrollArea> */}
+            </ScrollArea>
             </div>
         </div>
     );

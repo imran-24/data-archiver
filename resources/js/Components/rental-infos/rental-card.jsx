@@ -22,7 +22,7 @@ const RentalInfo = ({ rental_info }) => {
                 flex
                 py-3
 
-                hover:shadow-lg
+                
                 px-6
                 hover:border-l-[4px]
                 cursor-pointer
@@ -34,14 +34,14 @@ const RentalInfo = ({ rental_info }) => {
                 gap-3
                 ${selected === rental_info.id && "border-l-[4px]"}`}
                 >
-                <div className="">
+                {/* <div className="">
                     <img
                         src="./rupali-bank.png"
                         className="h-[160px]  rounded-md object-cover"
                         alt=""
                     />
 
-                </div>
+                </div> */}
                 <div className="flex flex-1 flex-col justify-between  relative">
                     <RentalInfoData
                         name={rental_info.office_name}

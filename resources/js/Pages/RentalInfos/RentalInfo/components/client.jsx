@@ -1,6 +1,7 @@
 import SelectMap from "@/Components/map/map";
 import DetailItem from "@/Components/ui/DetailItem";
 import CategoryInput from "@/Components/ui/category-input";
+import { ScrollArea } from "@/Components/ui/scroll-area";
 import selectedListing from "@/hooks/selectdListing";
 import { floorList, getValue } from "@/lib/utils";
 import React, { useEffect } from "react";
@@ -13,24 +14,31 @@ const RentalInfoClient = ({
 }) => {
 
 
-    let floor_list = floorList(rental_info);
-    
+    let floor_list = []
+    floor_list = rental_info.floor_position.sort((a, b) => {
+        const numA = parseInt(a, 10);
+        const numB = parseInt(b, 10);
 
+        return numA - numB;
+    });
+    
+    console.log(rental_info)
     const selected = selectedListing(state => state.selected);
     const onSelect = selectedListing(state => state.onSelect(''));
 
+    
     useEffect(()=>{
         if(selected) onSelect
     },[selected, onSelect])
 
     return (
-        <div className="px-10 ">
+        <div className="px-10 pt-3 ">
             <div className="flex items-center justify-between pb-4 border-b">
                 <div className="text-lg ">Detail Rental Information</div>
             </div>
             <div className="flex flex-col w-full m-auto max-h-full mt-3">
                 <div className="flex-1 ">
-                    <div className="grid md:grid-cols-3 lg:grid-cols-4 pb-4">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pb-4">
                         <DetailItem
                             small
                             title="Office Name"

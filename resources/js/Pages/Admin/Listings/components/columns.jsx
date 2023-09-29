@@ -45,10 +45,10 @@ import CellActions from "./cell-actions";
       accessorKey: "expiry_date_of_aggrement",
       header: "Expire date",
     },
-    {
-      accessorKey: "address",
-      header: "Address",
-    },
+    // {
+    //   accessorKey: "address",
+    //   header: "Address",
+    // },
     {
       accessorKey: "status",
       header: "Status",

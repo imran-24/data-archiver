@@ -14,14 +14,14 @@ const RentalInfoData = ({name, approval, start_date, end_date, floors}) => {
 
   const remaing = formatDistanceToNow(
     new Date(end_date),
-    )
+  )
 
     return (
     <div className=' flex flex-col  space-y-1'>
-        <div className='text-xs text-neutral-500 truncate'>
+        <div className='font-medium text-base '>
             {name}
         </div>
-        <div className='font-extrabold '>
+        <div className='text-xs text-neutral-500  truncate font-semibold'>
             {approval ? 'Approved' : 'Not Approved'  }
         </div>
         <div className='flex flex-col gap-2 text-xs text-neutral-400'>

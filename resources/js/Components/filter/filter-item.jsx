@@ -20,16 +20,13 @@ import { Check, CheckIcon } from "lucide-react"
 import { Separator } from "@/Components/ui/separator"
 import { Badge } from "@/Components/ui/badge"
 import { ScrollArea } from "@/Components/ui/scroll-area"
-import { usePage } from "@inertiajs/react"
-import { useParams, useSearchParams } from "react-router-dom"
-
-
+import { router, usePage } from "@inertiajs/react"
 
 
 
 
 const FilterItem = (
-   {data: frameworks, label, icon: Icon}
+   {data: frameworks, label, icon: Icon, setSearchParams, searchParams}
     ) => {
         
   
@@ -40,42 +37,30 @@ const FilterItem = (
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState('')
 
-
-
-  let [searchParams, setSearchParams] = useSearchParams();
-   
-
   const currentItem = frameworks.find((framework) => framework.label === value)
   const onSelectItem = ((item)=>{
-        setValue(item.label === value ? "" : item.label)
+        const currentParams = Object.fromEntries(searchParams.entries());
+        
+        if(item.label === value){
+          setValue("")
+          delete currentParams[label]
+        }
+        else{
+          setValue(item.label)
+          // Add a new query parameter
+          currentParams[label] = item.value;
+        }
+        // Convert the updated object back to a URLSearchParams
+        const updatedSearchParams = new URLSearchParams(currentParams);
+        // Set the updated search parameters
+        setSearchParams(updatedSearchParams);
         setOpen(false)
-        // router.push(`/${store.value}`)
+        router.visit(window.location.href)
+
+       
+
   })
-  let currentQuery = []
-  React.useEffect(()=>{
-    
-    if(searchParams.size) {
-      console.log('hi')
-    }
 
-    // const updatedQuery = {
-    //   ...currentQuery,
-    //   [label]: value
-    // }
-    // // console.log(updatedQuery)
-
-    // // if (params?.get(label) === label) {
-    // //   delete updatedQuery.category;
-    // // }
-
-    // const url = qs.stringifyUrl({
-    //   url: '/',
-    //   query: updatedQuery
-    // }, { skipNull: true });
-
-    // route
-
-  },[value])
   
 
   return (
@@ -151,7 +136,7 @@ const FilterItem = (
         <CommandInput placeholder={`Search by ${label.toLowerCase()}...`} className="h-9" />
         <CommandEmpty>No {label} found.</CommandEmpty>
           <CommandGroup>
-          <ScrollArea className={`${label === "Location" ? 'h-96' : 'h-auto' }`}>            
+          <ScrollArea className={`${label === "Upazila" || label === "District" ? 'h-96' : 'h-auto' }`}>            
           {frameworks.map((framework, index) => (
               <CommandItem
                 key={index}
@@ -159,11 +144,11 @@ const FilterItem = (
               >
                 <CheckIcon
                   className={cn(
-                    "mr-3 h-4 w-4 ",
+                    "mr-3 h-3 w-3 ",
                     currentItem?.value === framework.value ? "opacity-100" : "opacity-0"
                   )}
                 />
-                <div className="flex-1">{framework.label}</div>
+                <div className="flex-1 text-xs">{framework.label}</div>
                 {framework.title && <Badge variant={'outline'}  className='text-[8px] ml-auto '>{framework.title}</Badge >}
               </CommandItem>
             ))}

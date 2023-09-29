@@ -1,4 +1,4 @@
-import { Link, usePage } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import UserMenu from "./user-menu";
 import Logo from "./logo";
@@ -16,7 +16,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
-import { useSearchParams, useParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const Navbar = () => {
     const [search, setSearch] = useState('')
@@ -25,13 +25,14 @@ const Navbar = () => {
     const { props } = usePage();
     const user = props.auth.user;
     let [searchParams, setSearchParams] = useSearchParams();
-
+    const url = usePage().url;
+    console.log(url)
     
     const handleSearch = () =>{
         const params = {}
         params.search = search
         setSearchParams(params)
-        window.location.reload()
+        router.visit(window.location.href)
     }
 
     // const pathname = window.location.pathname;
@@ -42,7 +43,7 @@ const Navbar = () => {
     //     rental_infos: pathname === "/listings",
     // };
     return (
-        <div className="border md:px-6">
+        <div className="border md:px-6 h-[60px]">
             <div className="py-2">
                 <div className="flex items-center gap-3">
                     {/* left */}
@@ -69,6 +70,7 @@ const Navbar = () => {
                         }
                         
                         </div> */}
+                        {(url != "/dashboard" && url != "/listings" && url != "/listings/create" && url != "/critical-listings" && url != "/expired-listings")  && 
                         <Sheet className="bg-transparent">
                             <SheetTrigger asChild>
                                 <div className="w-[300px] border border-neutral-200 rounded-full hover:border-neutral-300 ">
@@ -90,13 +92,13 @@ const Navbar = () => {
                                 </SheetHeader>
                                 <div className="grid grid-cols-1 gap-4 justify-center py-4">
                                     
-                                        <Input
-                                            className="focus-visible:ring-indigo-500 h-16 text-xl"
-                                            onChange={(e)=> setSearch(e.target.value)}
-                                            
-                                            // className="col-span-"
-                                        />
-                                    </div>
+                                    <Input
+                                        className="focus-visible:ring-indigo-500 h-16 text-xl"
+                                        onChange={(e)=> setSearch(e.target.value)}
+                                        
+                                        // className="col-span-"
+                                    />
+                                </div>
                      
                                 <SheetFooter>
                                     <SheetClose asChild>
@@ -106,7 +108,7 @@ const Navbar = () => {
                                     </SheetClose>
                                 </SheetFooter>
                             </SheetContent>
-                        </Sheet>
+                        </Sheet>}
                         
                     </div>
                     {/* right */}
