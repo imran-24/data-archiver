@@ -25,8 +25,7 @@ const Navbar = () => {
     const { props } = usePage();
     const user = props.auth.user;
     let [searchParams, setSearchParams] = useSearchParams();
-    const url = usePage().url;
-    console.log(url)
+    const pathname = window.location.pathname
     
     const handleSearch = () =>{
         const params = {}
@@ -70,7 +69,7 @@ const Navbar = () => {
                         }
                         
                         </div> */}
-                        {(url != "/dashboard" && url != "/listings" && url != "/listings/create" && url != "/critical-listings" && url != "/expired-listings")  && 
+                        {pathname == "/rental-infos"  && 
                         <Sheet className="bg-transparent">
                             <SheetTrigger asChild>
                                 <div className="w-[300px] border border-neutral-200 rounded-full hover:border-neutral-300 ">

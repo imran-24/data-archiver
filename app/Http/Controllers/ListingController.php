@@ -24,12 +24,15 @@ class ListingController extends Controller
     {
         $listings = Listing::orderBy("created_at", "desc")->get();
         
-        if(Auth::user()){
+        if(Auth::user()->is_admin){
             $user = Auth::user();
             return Inertia::render('Admin/Listings/page',[
                 'listings' => $listings,
                 'user' => $user,
             ]);
+        }
+        else{
+            return abort(403);
         }
     }
 

@@ -94,11 +94,13 @@ const UserMenu = ({ currentUser }) => {
                             Rental Info
                         {/* </Link> */}
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    {currentUser.is_admin  ?
+                     <DropdownMenuItem>
                         <Link href='/listings' >
                            Listings
                         </Link>
                     </DropdownMenuItem>
+                    : <></>}
                     <DropdownMenuItem>
                         <Link href='/critical-listings' >
                            Critical Listings

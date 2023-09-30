@@ -18,14 +18,6 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
 
 Route::redirect('/', 'login');
 
@@ -35,7 +27,7 @@ Route::get('/critical-listings',[ RentalInfoController::class, 'criticalListings
 Route::get('/expired-listings',[ RentalInfoController::class, 'expiredListings'])->middleware(['auth', 'verified'])->name('expired-listings');
 
 
-Route::resource('listings', ListingController::class)->middleware(['auth']);
+Route::resource('listings', ListingController::class)->middleware(['auth', 'is_admin']);
 
 
 Route::middleware('auth')->group(function () {
