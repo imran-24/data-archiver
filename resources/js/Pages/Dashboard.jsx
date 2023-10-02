@@ -36,7 +36,7 @@ export default function Dashboard({rental_infos, user}) {
                         </CardHeader>
                         <CardContent>
                             <div className='text-2xl font-bold'>
-                                587
+                                586
                             </div>
                         </CardContent>
 
