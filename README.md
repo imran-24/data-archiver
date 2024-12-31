@@ -61,4 +61,8 @@ Ensure you have the following installed on your system:
   <li>MySQL</li>
 </ul>
 
+![login ](https://github.com/user-attachments/assets/b8ba74df-d3ae-4e84-a0e9-9fdd86142f26)
+![dashboard](https://github.com/user-attachments/assets/4c4e6b79-8fe4-4578-b93d-ddc5422f7c57)
+![listings-table](https://github.com/user-attachments/assets/6971ced7-7f97-4ac3-bd3c-6d32ba20f903)
+![listing_form](https://github.com/user-attachments/assets/cea28798-7786-4e50-9db9-22cd7d0f7008)
 
